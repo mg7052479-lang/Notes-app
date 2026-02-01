@@ -1,0 +1,66 @@
+* {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #f4f4f4;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+}
+
+.note-input {
+  max-width: 500px;
+  margin: 20px auto;
+  display: flex;
+  gap: 10px;
+}
+
+textarea {
+  flex: 1;
+  padding: 10px;
+  resize: none;
+}
+
+select, button {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.notes-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.note {
+  padding: 15px;
+  border-radius: 8px;
+  position: relative;
+  min-height: 120px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.note p {
+  white-space: pre-wrap;
+}
+
+.note button {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  border: none;
+  background: #333;
+  color: #fff;
+  padding: 5px 8px;
+  border-radius: 4px;
+}
+
+.note .edit {
+  right: 65px;
+  background: #555;
+}
