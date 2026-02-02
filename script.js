@@ -1,0 +1,66 @@
+const noteText = document.getElementById("noteText");
+const noteColor = document.getElementById("noteColor");
+const addBtn = document.getElementById("addBtn");
+const notesContainer = document.getElementById("notesContainer");
+
+let notes = JSON.parse(localStorage.getItem("notes")) || [];
+
+addBtn.addEventListener("click", addNote);
+
+function addNote() {
+  const text = noteText.value.trim();
+  const color = noteColor.value;
+
+  if (!text) return;
+
+  const note = {
+    id: Date.now(),
+    text,
+    color
+  };
+
+  notes.push(note);
+  saveAndRender();
+  noteText.value = "";
+}
+
+function renderNotes() {
+  notesContainer.innerHTML = "";
+
+  notes.forEach(note => {
+    const noteDiv = document.createElement("div");
+    noteDiv.className = "note";
+    noteDiv.style.background = note.color;
+
+    const p = document.createElement("p");
+    p.textContent = note.text;
+
+   // const editBtn = document.createElement("button");
+   // editBtn.textContent = "Edit";
+    // editBtn.className = "edit";
+   // editBtn.onclick = () => editNote(note.id);
+
+    const delBtn = document.createElement("button");
+    delBtn.textContent = "Delete";
+    delBtn.onclick = () => deleteNote(note.id);
+
+    noteDiv.appendChild(p);
+    noteDiv.appendChild(editBtn);
+    noteDiv.appendChild(delBtn);
+
+    notesContainer.appendChild(noteDiv);
+  });
+}
+
+function deleteNote(id) {
+  notes = notes.filter(note => note.id !== id);
+  saveAndRender();
+}
+
+
+// function saveAndRender() {
+//   localStorage.setItem("notes", JSON.stringify(notes));
+//   renderNotes();
+// }
+
+renderNotes();
