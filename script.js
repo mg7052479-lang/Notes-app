@@ -35,10 +35,10 @@ function renderNotes() {
     const p = document.createElement("p");
     p.textContent = note.text;
 
-   // const editBtn = document.createElement("button");
-   // editBtn.textContent = "Edit";
-    // editBtn.className = "edit";
-   // editBtn.onclick = () => editNote(note.id);
+   const editBtn = document.createElement("button");
+   editBtn.textContent = "Edit";
+    editBtn.className = "edit";
+   editBtn.onclick = () => editNote(note.id);
 
     const delBtn = document.createElement("button");
     delBtn.textContent = "Delete";
@@ -57,10 +57,21 @@ function deleteNote(id) {
   saveAndRender();
 }
 
+function editNote(id) {
+  const note = notes.find(note => note.id === id);
+  const newText = prompt("Edit note:", note.text);
 
-// function saveAndRender() {
-//   localStorage.setItem("notes", JSON.stringify(notes));
-//   renderNotes();
-// }
+  if (newText === null || newText.trim() === "") return;
+
+  note.text = newText.trim();
+  saveAndRender();
+}
+
+
+
+function saveAndRender() {
+  localStorage.setItem("notes", JSON.stringify(notes));
+  renderNotes();
+}
 
 renderNotes();
