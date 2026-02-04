@@ -5,13 +5,28 @@ const notesContainer = document.getElementById("notesContainer");
 
 let notes = JSON.parse(localStorage.getItem("notes")) || [];
 
+// Add note on button click
 addBtn.addEventListener("click", addNote);
+
+// Add note on Enter key
+noteText.addEventListener("keydown", function (e) {
+  if (e.key === "Enter" && !e.shiftKey) {
+    e.preventDefault();
+    addNote();
+  }
+});
 
 function addNote() {
   const text = noteText.value.trim();
   const color = noteColor.value;
 
   if (!text) return;
+
+  // ✅ Small validation update
+  if (text.length > 200) {
+    alert("Note is too long (max 200 characters)");
+    return;
+  }
 
   const note = {
     id: Date.now(),
@@ -35,10 +50,10 @@ function renderNotes() {
     const p = document.createElement("p");
     p.textContent = note.text;
 
-   const editBtn = document.createElement("button");
-   editBtn.textContent = "Edit";
+    const editBtn = document.createElement("button");
+    editBtn.textContent = "Edit";
     editBtn.className = "edit";
-   editBtn.onclick = () => editNote(note.id);
+    editBtn.onclick = () => editNote(note.id);
 
     const delBtn = document.createElement("button");
     delBtn.textContent = "Delete";
@@ -66,8 +81,6 @@ function editNote(id) {
   note.text = newText.trim();
   saveAndRender();
 }
-
-
 
 function saveAndRender() {
   localStorage.setItem("notes", JSON.stringify(notes));
