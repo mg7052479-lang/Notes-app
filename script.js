@@ -1,90 +1,44 @@
-const noteText = document.getElementById("noteText");
-const noteColor = document.getElementById("noteColor");
-const addBtn = document.getElementById("addBtn");
-const notesContainer = document.getElementById("notesContainer");
+const noteColor = document.getElementById("notes-color");
+const notesContainer = document.getElementById("notes-container");
+const notesText = document.getElementById("notes-text");
+const addbtn = document.getElementById("addbtn");
 
-let notes = JSON.parse(localStorage.getItem("notes")) || [];
+// Add button // 
 
-// Add note on button click
-addBtn.addEventListener("click", addNote);
+addbtn.addEventListener("click",function(){
+  const textInput = notesText.value.trim();
+  const colorInput = noteColor.value ;
+  //valadition code // 
+if(!textInput ) return ;
 
-// Add note on Enter key
-noteText.addEventListener("keydown", function (e) {
-  if (e.key === "Enter" && !e.shiftKey) {
-    e.preventDefault();
-    addNote();
-  }
+// create Notes // 
+const note = document.createElement("div");
+note.classList.add("note");
+note.style.background = noteColor.value;
+
+
+// create text // 
+const p = document.createElement("p");
+p.textContent = textInput ;
+
+// delete button // 
+
+const delBtn = document.createElement("button");
+delBtn.textContent = "Delete";
+
+// Function for delbtn // 
+delBtn.addEventListener("click", function(){
+  note.remove();
+})
+// add element to the container //
+note.appendChild(p);
+note.appendChild(delBtn);
+
+notesContainer.appendChild(note);
+notesText.value = "";
 });
 
-function addNote() {
-  const text = noteText.value.trim();
-  const color = noteColor.value;
 
-  if (!text) return;
 
-  // ✅ Small validation update
-  if (text.length > 200) {
-    alert("Note is too long (max 200 characters)");
-    return;
-  }
 
-  const note = {
-    id: Date.now(),
-    text,
-    color
-  };
 
-  notes.push(note);
-  saveAndRender();
-  noteText.value = "";
-}
-
-function renderNotes() {
-  notesContainer.innerHTML = "";
-
-  notes.forEach(note => {
-    const noteDiv = document.createElement("div");
-    noteDiv.className = "note";
-    noteDiv.style.background = note.color;
-
-    const p = document.createElement("p");
-    p.textContent = note.text;
-
-    const editBtn = document.createElement("button");
-    editBtn.textContent = "Edit";
-    editBtn.className = "edit";
-    editBtn.onclick = () => editNote(note.id);
-
-    const delBtn = document.createElement("button");
-    delBtn.textContent = "Delete";
-    delBtn.onclick = () => deleteNote(note.id);
-
-    noteDiv.appendChild(p);
-    noteDiv.appendChild(editBtn);
-    noteDiv.appendChild(delBtn);
-
-    notesContainer.appendChild(noteDiv);
-  });
-}
-
-function deleteNote(id) {
-  notes = notes.filter(note => note.id !== id);
-  saveAndRender();
-}
-
-function editNote(id) {
-  const note = notes.find(note => note.id === id);
-  const newText = prompt("Edit note:", note.text);
-
-  if (newText === null || newText.trim() === "") return;
-
-  note.text = newText.trim();
-  saveAndRender();
-}
-
-function saveAndRender() {
-  localStorage.setItem("notes", JSON.stringify(notes));
-  renderNotes();
-}
-
-renderNotes();

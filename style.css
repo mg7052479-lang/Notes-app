@@ -1,66 +1,68 @@
-* {
+*{
+  font-family: Arial, Helvetica, sans-serif;
   box-sizing: border-box;
-  font-family: Arial, sans-serif;
 }
 
-body {
-  background: #f4f4f4;
-  padding: 20px;
+body{
+background: linear-gradient(to right, #1d976c, #93f9b9)
 }
-
-h1 {
+h1{
   text-align: center;
+  margin: 50px auto;
 }
 
-.note-input {
-  max-width: 500px;
-  margin: 20px auto;
+#notes-input{
   display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 10px;
+
+}
+#notes-text{
+  width: 400px;
+  padding: 18px;
+  border-radius: 20px;
+  border: none;
+
+}
+#notes-color{
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  border: none;
+  border-radius: 18px;
+
 }
 
-textarea {
-  flex: 1;
-  padding: 10px;
-  resize: none;
+#addbtn{
+border: none;
+  padding: 20px;
+  border-radius: 25px;
 }
-
-select, button {
-  padding: 10px;
-  cursor: pointer;
-}
-
-.notes-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 15px;
-  margin-top: 30px;
+#notes-container{
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(200px, 1fr));
+    gap: 15px;
+    margin: 40px;
 }
 
 .note {
-  padding: 15px;
-  border-radius: 8px;
-  position: relative;
+  width: 220px;
   min-height: 120px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-.note p {
-  white-space: pre-wrap;
+  padding: 12px;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  color: #222;
+  font-size: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .note button {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
+  margin-top: 10px;
+  padding: 6px;
   border: none;
-  background: #333;
-  color: #fff;
-  padding: 5px 8px;
-  border-radius: 4px;
-}
-
-.note .edit {
-  right: 65px;
-  background: #555;
+  border-radius: 6px;
+  cursor: pointer;
 }
