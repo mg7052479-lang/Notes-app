@@ -3,42 +3,102 @@ const notesContainer = document.getElementById("notes-container");
 const notesText = document.getElementById("notes-text");
 const addbtn = document.getElementById("addbtn");
 
-// Add button // 
+/* ======================
+   CREATE NOTE
+====================== */
+function createNote(text, color) {
+  const note = document.createElement("div");
+  note.className = "note";
+  note.style.background = color;
 
-addbtn.addEventListener("click",function(){
-  const textInput = notesText.value.trim();
-  const colorInput = noteColor.value ;
-  //valadition code // 
-if(!textInput ) return ;
+  const p = document.createElement("p");
+  p.textContent = text;
 
-// create Notes // 
-const note = document.createElement("div");
-note.classList.add("note");
-note.style.background = noteColor.value;
+  const editBtn = document.createElement("button");
+  editBtn.textContent = "Edit";
 
+  const delBtn = document.createElement("button");
+  delBtn.textContent = "Delete";
 
-// create text // 
-const p = document.createElement("p");
-p.textContent = textInput ;
+  // DELETE NOTE
+  delBtn.addEventListener("click", function () {
+    note.remove();
+    saveToLocalStorage();
+  });
 
-// delete button // 
+  // EDIT NOTE
+  editBtn.addEventListener("click", function () {
+    if (editBtn.textContent === "Edit") {
+      const input = document.createElement("input");
+      input.type = "text";
+      input.value = p.textContent;
 
-const delBtn = document.createElement("button");
-delBtn.textContent = "Delete";
+      note.replaceChild(input, p);
+      editBtn.textContent = "Save";
+      input.focus();
 
-// Function for delbtn // 
-delBtn.addEventListener("click", function(){
-  note.remove();
-})
-// add element to the container //
-note.appendChild(p);
-note.appendChild(delBtn);
+      input.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") {
+          saveEdit(note, p, input, editBtn);
+        }
+      });
+    } else {
+      const input = note.querySelector("input");
+      saveEdit(note, p, input, editBtn);
+    }
+  });
 
-notesContainer.appendChild(note);
-notesText.value = "";
+  note.appendChild(p);
+  note.appendChild(editBtn);
+  note.appendChild(delBtn);
+  notesContainer.appendChild(note);
+}
+
+/* ======================
+   SAVE EDIT
+====================== */
+function saveEdit(note, p, input, editBtn) {
+  p.textContent = input.value.trim() || p.textContent;
+  note.replaceChild(p, input);
+  editBtn.textContent = "Edit";
+  saveToLocalStorage();
+}
+
+/* ======================
+   ADD NOTE
+====================== */
+addbtn.addEventListener("click", function () {
+  const text = notesText.value.trim();
+  const color = noteColor.value;
+
+  if (!text) return;
+
+  createNote(text, color);
+  saveToLocalStorage();
+
+  notesText.value = "";
 });
 
+/* ======================
+   LOCAL STORAGE
+====================== */
+function saveToLocalStorage() {
+  const notes = [];
 
+  document.querySelectorAll(".note").forEach(note => {
+    notes.push({
+      text: note.querySelector("p").textContent,
+      color: note.style.background
+    });
+  });
 
+  localStorage.setItem("notes", JSON.stringify(notes));
+}
 
+function loadFromLocalStorage() {
+  const notes = JSON.parse(localStorage.getItem("notes")) || [];
+  notes.forEach(note => createNote(note.text, note.color));
+}
 
+// LOAD NOTES ON PAGE START
+loadFromLocalStorage();
