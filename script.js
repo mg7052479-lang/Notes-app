@@ -2,7 +2,7 @@ const noteColor = document.getElementById("notes-color");
 const notesContainer = document.getElementById("notes-container");
 const notesText = document.getElementById("notes-text");
 const addbtn = document.getElementById("addbtn");
-// hello 
+
 /* ======================
    CREATE NOTE
 ====================== */
@@ -102,6 +102,4 @@ function loadFromLocalStorage() {
 
 // LOAD NOTES ON PAGE START
 loadFromLocalStorage();
-//
-test-change
-// fix email commit
+
