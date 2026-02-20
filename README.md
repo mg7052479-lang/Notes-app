@@ -13,7 +13,7 @@ This project demonstrates DOM manipulation, inline editing, and clean UI logic w
 
 🎨 Choose different colors for notes
 
-✏️ Inline edit notes directly
+✏️ Inline edit notes .
 
 🗑️ Delete notes instantly
 
