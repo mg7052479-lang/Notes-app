@@ -3,7 +3,7 @@
 📝 Notes App (Vanilla JavaScript)
 
 A simple yet powerful Notes App built using HTML, CSS, and Vanilla JavaScript.
-Users can add, edit, delete notes, and customize each note with different background colors.
+Users can add, edit, delete notes, and customize each note with different background colors. 
 
 This project demonstrates DOM manipulation, inline editing, and clean UI logic without using any frameworks.
 
